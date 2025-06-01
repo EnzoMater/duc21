@@ -467,44 +467,34 @@
     </div>
   </div>
   <!-- bắt tính năng trong nút -->
-  <script>
+<script>
+  const toggleLed = document.getElementById("toggle-led");
+  const statusText = document.getElementById("led-status");
 
+  toggleLed.addEventListener("change", async function () {
+    const isChecked = toggleLed.checked;
 
-      const toggleLed = document.getElementById("toggle-led");
-      const statusText = document.getElementById("led-status");
-  
-      toggleLed.addEventListener("change", async function () {
+    if (!onLight || !offLight) {
+      console.error("Actions chưa được khởi tạo từ EraWidget.");
+      return;
+    }
 
-        const isChecked = toggleLed.checked;
-        if (isChecked) {
-          
-          statusText.textContent = "On";
-          console.log("LED Bulb:", "ON");
+    try {
+      if (isChecked) {
+        await eraWidget.triggerAction(onLight.action, null);
+        statusText.textContent = "On";
+        console.log("LED Bulb: ON");
+      } else {
+        await eraWidget.triggerAction(offLight.action, null);
+        statusText.textContent = "Off";
+        console.log("LED Bulb: OFF");
+      }
+    } catch (err) {
+      console.error("Lỗi khi trigger Era action:", err);
+    }
+  });
+</script>
 
-          await eraWidget.triggerAction(onLight.action, null);
-        } else {
-          
-          statusText.textContent = "Off";
-          console.log("LED Bulb:", "OFF");
-          await eraWidget.triggerAction(offLight.action, null);
-
-        }
-      const eraWidget = new EraWidget();
-      let onLight = null;
-      let offLight = null;
-      document.addEventListener("DOMContentLoaded", function () {
-
-        eraWidget.init({
-        onConfiguration: (configuration) => {
-          onLight = configuration.actions[0];
-          offLight = configuration.actions[1];
-        },
-        onValues: (values) => {},
-      });
-      });
-    });
-
-  </script>
   
 </body>
 </html>
