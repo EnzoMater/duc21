@@ -1,0 +1,483 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Smart Home Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+    body {
+      font-family: "Inter", sans-serif;
+      background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    /* Custom scrollbar hide for all browsers */
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    /* Smooth toggle switch */
+    input:checked + div {
+      background-color: #3b82f6;
+      transition: background-color 0.3s ease;
+    }
+    input:checked + div + span {
+      transform: translateX(1.25rem);
+      transition: transform 0.3s ease;
+    }
+    /* Circle shadow for toggles */
+    input + div + span {
+      box-shadow: 0 0 5px rgb(59 130 246 / 0.6);
+    }
+    /* Circle shadow on focus */
+    input:focus-visible + div {
+      box-shadow: 0 0 8px 2px rgb(59 130 246 / 0.7);
+      outline: none;
+    }
+    /* Circle shadow on focus for circle */
+    input:focus-visible + div + span {
+      box-shadow: 0 0 8px 2px rgb(59 130 246 / 0.7);
+    }
+    /* Circle shadow on hover */
+    label:hover input:not(:checked) + div + span {
+      box-shadow: 0 0 5px rgb(191 219 254 / 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div
+    class="relative w-full max-w-[720px] rounded-3xl bg-[#2f2f2f]/95 backdrop-blur-[30px] shadow-2xl shadow-black/90 p-8 grid grid-cols-12 gap-8"
+    style="font-feature-settings: 'ss01' on, 'ss02' on"
+  >
+    <!-- Left vertical nav -->
+    <nav
+      class="col-span-1 flex flex-col items-center space-y-8 bg-[#3a3a3a]/80 rounded-3xl py-8 shadow-inner shadow-black/40"
+    >
+      <button
+        aria-label="Home"
+        class="w-14 h-14 bg-gradient-to-tr from-[#4a90e2] to-[#1e3a8a] rounded-3xl flex items-center justify-center text-white text-xl shadow-lg shadow-[#4a90e2]/60"
+      >
+        <i class="fas fa-home"></i>
+      </button>
+      <button
+        aria-label="Chat"
+        class="w-14 h-14 text-[#bfbfbf] hover:text-white flex items-center justify-center text-xl transition-colors duration-300"
+      >
+        <i class="fas fa-comment-alt"></i>
+      </button>
+      <button
+        aria-label="Analytics"
+        class="w-14 h-14 text-[#bfbfbf] hover:text-white flex items-center justify-center text-xl transition-colors duration-300"
+      >
+        <i class="fas fa-chart-line"></i>
+      </button>
+      <button
+        aria-label="Calendar"
+        class="w-14 h-14 text-[#bfbfbf] hover:text-white flex items-center justify-center text-xl transition-colors duration-300"
+      >
+        <i class="fas fa-calendar-alt"></i>
+      </button>
+      <button
+        aria-label="Files"
+        class="w-14 h-14 text-[#bfbfbf] hover:text-white flex items-center justify-center text-xl transition-colors duration-300"
+      >
+        <i class="fas fa-folder"></i>
+      </button>
+      <button
+        aria-label="Settings"
+        class="w-14 h-14 text-[#bfbfbf] hover:text-white flex items-center justify-center text-xl transition-colors duration-300"
+      >
+        <i class="fas fa-cog"></i>
+      </button>
+      <div
+        class="mt-auto w-14 h-14 rounded-full overflow-hidden border-2 border-[#4a4a4a] shadow-md shadow-black/50"
+      >
+        <img
+          alt="User avatar profile picture, circular"
+          class="w-full h-full object-cover"
+          height="56"
+          src="https://placehold.co/56x56/png?text=User+Avatar"
+          width="56"
+        />
+      </div>
+    </nav>
+    <!-- Main content area -->
+    <div class="col-span-11 grid grid-cols-12 gap-8">
+      <!-- Top left weather & music -->
+      <section
+        class="col-span-7 bg-gradient-to-tr from-[#3a3a3a]/90 to-[#2a2a2a]/90 rounded-3xl p-8 flex flex-col space-y-8 shadow-lg shadow-black/60"
+      >
+        <div class="flex justify-between items-start text-white">
+          <div>
+            <p class="text-base font-semibold tracking-wide">Hello, Miranda 👋</p>
+            <p class="text-sm text-[#bfbfbf] mt-1 leading-relaxed max-w-[280px]">
+              Have a good day & let’s set your home devices.
+            </p>
+          </div>
+          <div
+            class="text-xs text-[#bfbfbf] text-right space-y-1 font-mono select-none"
+            style="line-height: 1.2"
+          >
+            <p>
+              Precipitation: <span class="font-semibold">5%</span>
+            </p>
+            <p>
+              Humidity: <span class="font-semibold">80%</span>
+            </p>
+            <p>
+              Wind: <span class="font-semibold">2.5 km/h</span>
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-8">
+          <img
+            alt="Cloud icon representing scattered clouds weather, white fluffy cloud with subtle shading"
+            class="w-20 h-20 drop-shadow-lg"
+            height="80"
+            src="https://placehold.co/80x80/png?text=Cloud+Icon"
+            width="80"
+          />
+          <div class="text-white select-none">
+            <p
+              class="text-6xl font-extrabold leading-none tracking-tight drop-shadow-md"
+              style="text-shadow: 0 0 6px rgba(255 255 255 / 0.6)"
+            >
+              13°
+            </p>
+            <p class="text-lg text-[#bfbfbf] font-semibold tracking-wide">
+              Scattered clouds
+            </p>
+            <p class="text-sm text-[#bfbfbf] mt-1 font-mono">8°</p>
+          </div>
+        </div>
+        <div
+          class="flex space-x-6 overflow-x-auto scrollbar-hide py-2"
+          aria-label="Music player controls"
+        >
+          <div
+            class="flex-shrink-0 w-40 bg-[#2f2f2f]/90 rounded-3xl p-5 text-white shadow-md shadow-black/40 hover:shadow-[#4a90e2]/70 transition-shadow duration-300"
+          >
+            <p class="text-sm font-semibold truncate">Waiting On The World...</p>
+            <p class="text-xs text-[#bfbfbf] truncate mt-1">John Mayer</p>
+            <div class="flex items-center justify-between mt-5">
+              <button
+                aria-label="Shuffle"
+                class="text-[#4a90e2] text-lg hover:text-[#6fb1ff] transition-colors duration-200"
+              >
+                <i class="fas fa-random"></i>
+              </button>
+              <button
+                aria-label="Previous"
+                class="text-white text-lg hover:text-[#a0c4ff] transition-colors duration-200"
+              >
+                <i class="fas fa-step-backward"></i>
+              </button>
+              <button
+                aria-label="Play"
+                class="bg-[#4a90e2] rounded-full w-9 h-9 flex items-center justify-center text-white text-lg shadow-lg shadow-[#4a90e2]/60 hover:bg-[#6fb1ff] transition-colors duration-200"
+              >
+                <i class="fas fa-play"></i>
+              </button>
+              <button
+                aria-label="Next"
+                class="text-white text-lg hover:text-[#a0c4ff] transition-colors duration-200"
+              >
+                <i class="fas fa-step-forward"></i>
+              </button>
+              <button
+                aria-label="Repeat"
+                class="text-[#4a90e2] text-lg hover:text-[#6fb1ff] transition-colors duration-200"
+              >
+                <i class="fas fa-redo"></i>
+              </button>
+            </div>
+          </div>
+          <div
+            class="flex-shrink-0 w-40 bg-[#2f2f2f]/90 rounded-3xl p-5 text-white shadow-md shadow-black/40 hover:shadow-[#4a90e2]/70 transition-shadow duration-300"
+          >
+            <p class="text-sm font-semibold truncate">Avatar: The Last Airb...</p>
+            <p class="text-xs text-[#bfbfbf] truncate mt-1">
+              Albert Kim Pictures, Rideba...
+            </p>
+            <div class="flex items-center justify-center mt-5 space-x-4">
+              <button
+                aria-label="Previous"
+                class="text-white text-lg hover:text-[#a0c4ff] transition-colors duration-200"
+              >
+                <i class="fas fa-step-backward"></i>
+              </button>
+              <button
+                aria-label="Play"
+                class="bg-[#4a90e2] rounded-full w-9 h-9 flex items-center justify-center text-white text-lg shadow-lg shadow-[#4a90e2]/60 hover:bg-[#6fb1ff] transition-colors duration-200"
+              >
+                <i class="fas fa-play"></i>
+              </button>
+              <button
+                aria-label="Next"
+                class="text-white text-lg hover:text-[#a0c4ff] transition-colors duration-200"
+              >
+                <i class="fas fa-step-forward"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Top right temperature control -->
+      <section
+        class="col-span-5 bg-gradient-to-tr from-[#3a3a3a]/90 to-[#2a2a2a]/90 rounded-3xl p-8 flex flex-col justify-between shadow-lg shadow-black/60"
+      >
+        <div class="flex justify-between items-center text-white mb-6">
+          <div>
+            <p class="text-base font-semibold tracking-wide">Current Temperature</p>
+            <p class="text-sm text-[#bfbfbf] mt-1">Samsung Air Conditioner</p>
+          </div>
+          <label
+            class="relative inline-flex items-center cursor-pointer"
+            for="toggle-temp"
+            title="Toggle Air Conditioner"
+          >
+            <input
+              checked
+              class="sr-only peer"
+              id="toggle-temp"
+              type="checkbox"
+              aria-checked="true"
+            />
+            <div
+              class="w-14 h-7 bg-gray-300 rounded-full peer-focus:ring-4 peer-focus:ring-blue-400 dark:peer-focus:ring-blue-800 transition-colors"
+            ></div>
+            <span
+              class="absolute left-1 top-1 bg-white w-5 h-5 rounded-full shadow-md transition-transform peer-checked:translate-x-7"
+            ></span>
+          </label>
+        </div>
+        <div
+          class="relative flex items-center justify-center rounded-full border-2 border-[#4a90e2] w-52 h-52 mx-auto shadow-[0_0_20px_#4a90e2]"
+          aria-label="Temperature dial"
+        >
+          <p
+            class="text-white text-7xl font-extrabold drop-shadow-[0_0_10px_rgba(74,144,226,0.8)]"
+            style="text-shadow: 0 0 10px rgba(74,144,226,0.8)"
+          >
+            16°
+          </p>
+          <div
+            class="absolute bottom-10 text-[#bfbfbf] text-sm flex items-center space-x-2 select-none"
+          >
+            <i class="fas fa-fan text-lg"></i>
+            <span>800 rpm</span>
+          </div>
+          <div
+            class="absolute top-6 right-6 flex flex-col space-y-4 text-[#bfbfbf] text-xl select-none"
+          >
+            <button
+              aria-label="Settings"
+              class="hover:text-white transition-colors duration-200"
+              title="Settings"
+            >
+              <i class="fas fa-cog"></i>
+            </button>
+            <button
+              aria-label="Fan"
+              class="hover:text-white transition-colors duration-200"
+              title="Fan"
+            >
+              <i class="fas fa-fan"></i>
+            </button>
+            <button
+              aria-label="Bluetooth"
+              class="hover:text-white transition-colors duration-200"
+              title="Bluetooth"
+            >
+              <i class="fab fa-bluetooth-b"></i>
+            </button>
+            <button
+              aria-label="Power"
+              class="hover:text-white transition-colors duration-200"
+              title="Power"
+            >
+              <i class="fas fa-power-off"></i>
+            </button>
+          </div>
+          <div
+            class="absolute bottom-6 left-6 flex flex-col space-y-4 text-[#bfbfbf] text-xl select-none"
+          >
+            <button
+              aria-label="Increase temperature"
+              class="hover:text-white transition-colors duration-200"
+              title="Increase temperature"
+            >
+              <i class="fas fa-chevron-up"></i>
+            </button>
+            <button
+              aria-label="Decrease temperature"
+              class="hover:text-white transition-colors duration-200"
+              title="Decrease temperature"
+            >
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- Bottom controls -->
+      <section
+        class="col-span-12 grid grid-cols-3 gap-8 bg-gradient-to-tr from-[#3a3a3a]/90 to-[#2a2a2a]/90 rounded-3xl p-8 shadow-lg shadow-black/60"
+      >
+        <!-- LED Bulb -->
+        <div
+      class="bg-[#2f2f2f]/90 rounded-3xl p-6 flex flex-col justify-between text-white shadow-inner shadow-black/50 hover:shadow-[#4a90e2]/50 transition-shadow duration-300"
+    >
+      <div class="flex justify-between items-center">
+        <img
+          alt="LED Bulb icon, white lamp with light"
+          class="w-14 h-14 drop-shadow-md"
+          height="56"
+          src="https://placehold.co/56x56/png?text=LED+Bulb"
+          width="56"
+        />
+        <label
+          class="relative inline-flex items-center cursor-pointer"
+          for="toggle-led"
+          title="Toggle LED Bulb"
+        >
+          <input
+            aria-checked="false"
+            class="sr-only peer"
+            id="toggle-led"
+            type="checkbox"
+          />
+          <div
+            class="w-14 h-7 bg-gray-300 rounded-full peer-focus:ring-4 peer-focus:ring-blue-400 dark:peer-focus:ring-blue-800 transition-colors"
+          ></div>
+          <span
+            class="absolute left-1 top-1 bg-white w-5 h-5 rounded-full shadow-md transition-transform peer-checked:translate-x-7"
+          ></span>
+        </label>
+      </div>
+
+      <p class="text-sm font-semibold mt-5 tracking-wide select-none">LED Bulb</p>
+      <!-- ✅ Thêm ID để dễ truy cập -->
+      <p id="led-status" class="text-sm text-[#bfbfbf] select-none">Off</p>
+      <p
+        class="text-sm text-[#bfbfbf] mt-4 flex items-center justify-end space-x-2 select-none font-mono"
+      >
+        <i class="fas fa-bolt text-yellow-400"></i>
+        <span>0 kWh</span>
+      </p>
+    </div>
+        <!-- Wi-Fi Router -->
+        <div
+          class="bg-[#2f2f2f]/90 rounded-3xl p-6 flex flex-col justify-between text-white shadow-inner shadow-black/50 hover:shadow-[#4a90e2]/50 transition-shadow duration-300"
+        >
+          <div class="flex justify-between items-center">
+            <img
+              alt="Wi-Fi Router icon, white router with antennas"
+              class="w-14 h-14 drop-shadow-md"
+              height="56"
+              src="https://placehold.co/56x56/png?text=Wi-Fi+Router"
+              width="56"
+            />
+            <label
+              class="relative inline-flex items-center cursor-pointer"
+              for="toggle-wifi"
+              title="Toggle Wi-Fi Router"
+            >
+              <input
+                aria-checked="true"
+                checked
+                class="sr-only peer"
+                id="toggle-wifi"
+                type="checkbox"
+              />
+              <div
+                class="w-14 h-7 bg-gray-300 rounded-full peer-focus:ring-4 peer-focus:ring-blue-400 dark:peer-focus:ring-blue-800 transition-colors"
+              ></div>
+              <span
+                class="absolute left-1 top-1 bg-white w-5 h-5 rounded-full shadow-md transition-transform peer-checked:translate-x-7"
+              ></span>
+            </label>
+          </div>
+          <p class="text-sm font-semibold mt-5 tracking-wide select-none">Wi-Fi Router</p>
+          <p class="text-sm text-[#bfbfbf] select-none">On - Standby</p>
+          <p
+            class="text-sm text-[#bfbfbf] mt-4 flex items-center justify-end space-x-2 select-none font-mono"
+          >
+            <i class="fas fa-bolt text-yellow-400"></i>
+            <span>4 kWh</span>
+          </p>
+        </div>
+        <!-- Humidifier -->
+        <div
+          class="bg-[#2f2f2f]/90 rounded-3xl p-6 flex flex-col justify-between text-white shadow-inner shadow-black/50 hover:shadow-[#4a90e2]/50 transition-shadow duration-300"
+        >
+          <div class="flex justify-between items-center">
+            <img
+              alt="Humidifier icon, white cube-shaped humidifier with blue light"
+              class="w-14 h-14 drop-shadow-md"
+              height="56"
+              src="https://placehold.co/56x56/png?text=Humidifier"
+              width="56"
+            />
+            <label
+              class="relative inline-flex items-center cursor-pointer"
+              for="toggle-humidifier"
+              title="Toggle Humidifier"
+            >
+              <input
+                aria-checked="true"
+                checked
+                class="sr-only peer"
+                id="toggle-humidifier"
+                type="checkbox"
+              />
+              <div
+                class="w-14 h-7 bg-gray-300 rounded-full peer-focus:ring-4 peer-focus:ring-blue-400 dark:peer-focus:ring-blue-800 transition-colors"
+              ></div>
+              <span
+                class="absolute left-1 top-1 bg-white w-5 h-5 rounded-full shadow-md transition-transform peer-checked:translate-x-7"
+              ></span>
+            </label>
+          </div>
+          <p class="text-sm font-semibold mt-5 tracking-wide select-none">Humidifier</p>
+          <p class="text-sm text-[#bfbfbf] select-none">
+            On - Air Quality: Excellent
+          </p>
+          <p
+            class="text-sm text-[#bfbfbf] mt-4 flex items-center justify-end space-x-2 select-none font-mono"
+          >
+            <i class="fas fa-bolt text-yellow-400"></i>
+            <span>6 kWh</span>
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- bắt tính năng trong nút -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleLed = document.getElementById("toggle-led");
+      const statusText = document.getElementById("led-status");
+  
+      toggleLed.addEventListener("change", function () {
+        const isChecked = toggleLed.checked;
+        statusText.textContent = isChecked ? "On" : "Off";
+  
+        // Bạn có thể gửi trạng thái về server hoặc console
+        console.log("LED Bulb:", isChecked ? "ON" : "OFF");
+      });
+    });
+  </script>
+</body>
+</html>
