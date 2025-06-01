@@ -1,5 +1,7 @@
 <html lang="en">
 <head>
+  <script src="https://www.unpkg.com/@eohjs/era-widget@1.1.3/src/index.js"></script>
+
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>Smart Home Dashboard</title>
@@ -466,16 +468,40 @@
   </div>
   <!-- bắt tính năng trong nút -->
   <script>
+
+    const eraWidget = new EraWidget();
+    let onLight = null;
+    let offLight = null;
+
+    eraWidget.init({
+      onConfiguration: (configuration) => {
+        onLight = configuration.actions[0];
+        offLight = configuration.actions[1];
+      },
+      onValues: (values) => {},
+    });
     document.addEventListener("DOMContentLoaded", function () {
       const toggleLed = document.getElementById("toggle-led");
       const statusText = document.getElementById("led-status");
   
-      toggleLed.addEventListener("change", function () {
+      toggleLed.addEventListener("change", async  function () {
         const isChecked = toggleLed.checked;
-        statusText.textContent = isChecked ? "On" : "Off";
+        if (isChecked) {
+          await eraWidget.triggerAction(onLight.action, null);
+          console.log("LED Bulb:","ON");
+          statusText.textContent = "On";
+          
+        }
+
+        else {
+          await eraWidget.triggerAction(onLight.action, null);
+          statusText.textContent = "Off";
+          console.log("LED Bulb:","OFF");
+        }
+        
   
         // Bạn có thể gửi trạng thái về server hoặc console
-        console.log("LED Bulb:", isChecked ? "ON" : "OFF");
+        //console.log("LED Bulb:", isChecked ? "ON" : "OFF");
       });
     });
   </script>
