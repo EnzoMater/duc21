@@ -469,41 +469,38 @@
   <!-- bắt tính năng trong nút -->
   <script>
 
-    const eraWidget = new EraWidget();
-    let onLight = null;
-    let offLight = null;
-
-    eraWidget.init({
-      onConfiguration: (configuration) => {
-        onLight = configuration.actions[0];
-        offLight = configuration.actions[1];
-      },
-      onValues: (values) => {},
-    });
-    document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("DOMContentLoaded", function () {
       const toggleLed = document.getElementById("toggle-led");
       const statusText = document.getElementById("led-status");
   
-      toggleLed.addEventListener("change", async  function () {
+      toggleLed.addEventListener("change", async function () {
         const isChecked = toggleLed.checked;
-        if (isChecked) {
-          await eraWidget.triggerAction(onLight.action, null);
-          console.log("LED Bulb:","ON");
-          statusText.textContent = "On";
-          
-        }
-
-        else {
-          await eraWidget.triggerAction(offLight.action, null);
-          statusText.textContent = "Off";
-          console.log("LED Bulb:","OFF");
-        }
-        
   
-        // Bạn có thể gửi trạng thái về server hoặc console
-        //console.log("LED Bulb:", isChecked ? "ON" : "OFF");
+        if (isChecked) {
+          
+          statusText.textContent = "On";
+          console.log("LED Bulb:", "ON");
+          await eraWidget.triggerAction(onLight.action, null);
+        } else {
+          
+          statusText.textContent = "Off";
+          console.log("LED Bulb:", "OFF");
+          await eraWidget.triggerAction(offLight.action, null);
+        }
       });
     });
+    const eraWidget = new EraWidget();
+      let onLight = null;
+      let offLight = null;
+
+      eraWidget.init({
+        onConfiguration: (configuration) => {
+          onLight = configuration.actions[0];
+          offLight = configuration.actions[1];
+        },
+        onValues: (values) => {},
+      });
   </script>
+  
 </body>
 </html>
